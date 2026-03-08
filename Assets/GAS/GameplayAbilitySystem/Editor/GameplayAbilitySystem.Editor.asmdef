@@ -1,0 +1,18 @@
+{
+    "name": "GameplayAbilitySystem.Editor",
+    "rootNamespace": "GAS.Editor",
+    "references": [
+        "GUID:e31bf95d7d6f3a44dae8aa39f62bf891"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
