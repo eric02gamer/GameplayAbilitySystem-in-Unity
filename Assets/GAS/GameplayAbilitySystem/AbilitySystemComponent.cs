@@ -27,11 +27,6 @@ namespace GAS
 
         // /// TODO: 激活中的 Cues 表现
         // private Dictionary<string, Cue> inActiveCues;
-
-        private void CheckInit()
-        {
-            // if(!initialized) InitComponentInfo();
-        }
         
         /// 初始化
         private void InitComponentInfo()
@@ -140,26 +135,22 @@ namespace GAS
         /// 获取属性
         public bool TryGetAttribute(AttributeRef attribute, out GameplayAttributeData data)
         {
-            CheckInit();
             var hash = attribute.AttributeHash;
             return TryGetAttributeInternal(hash, out data);
         }
         public bool TryGetAttribute(int hash, out GameplayAttributeData data)
         {
-            CheckInit();
             return TryGetAttributeInternal(hash, out data);
         }
 
         // HACK: 待测试。直接设置属性
         public void SetAttribute(AttributeRef attribute, GameplayAttributeData newData, AbilitySystemComponent source = null)
         {
-            CheckInit();
             var hash = attribute.AttributeHash;
             SetAttributeInternal(hash, newData);
         }
         public void SetAttribute(int hash, GameplayAttributeData newData, AbilitySystemComponent source = null)
         {
-            CheckInit();
             SetAttributeInternal(hash, newData);
         }
         
@@ -167,7 +158,6 @@ namespace GAS
         public void RegisterAttributeValueChangeCallback(int hash,
             Action<EventGameplayAttributeChangeArgs> onAttributeChange)
         {
-            CheckInit();
             RegisterAttributeValueChangeCallbackInternal(hash, onAttributeChange);
         }
 
@@ -175,7 +165,6 @@ namespace GAS
         public void UnregisterAttributeValueChangeCallback(int hash,
             Action<EventGameplayAttributeChangeArgs> onAttributeChange)
         {
-            CheckInit();
             UnregisterAttributeValueChangeCallbackInternal(hash, onAttributeChange);
         }
 
@@ -187,7 +176,6 @@ namespace GAS
         /// 创建 GE Context
         public GameplayEffectContextHandle MakeEffectContext()
         {
-            CheckInit();
             GameplayEffectContext context = new GameplayEffectContext(this);
             effectContexts.Add(context.Handle, context);
             return context.Handle;
@@ -196,7 +184,6 @@ namespace GAS
         /// 创建 GE Spec
         public GameplayEffectSpecHandle MakeOutgoingEffectSpec(GameplayEffect gameplayEffect, int level, GameplayEffectContextHandle contextHandle)
         {
-            CheckInit();
             if (!gameplayEffect) return new GameplayEffectSpecHandle();
             
             return MakeOutgoingEffectSpecInternal(gameplayEffect, level, contextHandle);
@@ -205,25 +192,21 @@ namespace GAS
         /// 复制 GE Spec（以及 Spec 包含的 GE Context） 的数据副本给新的 ASC 进行管理
         public GameplayEffectSpecHandle ReplicateEffectSpecToSelf(GameplayEffectSpecHandle newEffectSpec)
         {
-            CheckInit();
             return ReplicateEffectSpec(newEffectSpec);
         }
         
         public ActiveEffectSpecHandle ApplyGameplayEffectSpecToSelf(GameplayEffectSpecHandle specHandle)
         {
-            CheckInit();
             return ApplyGameplayEffectSpec(specHandle);
         }
         
         public ActiveEffectSpecHandle ApplyGameplayEffectSpecToTarget(AbilitySystemComponent targetAsc, GameplayEffectSpecHandle specHandle)
         {
-            CheckInit();
             return targetAsc.ApplyGameplayEffectSpec(specHandle);
         }
         
         public ActiveEffectSpecHandle ApplyGameplayEffectToSelf(GameplayEffect gameplayEffect, AbilitySystemComponent sourceAsc, int level = 0, int stack = 1)
         {
-            CheckInit();
             if (!gameplayEffect) return new ActiveEffectSpecHandle();
             
             return ApplyGameplayEffectInternal(gameplayEffect, sourceAsc, level, stack);
@@ -234,7 +217,6 @@ namespace GAS
         /// </summary>
         public void RemoveActiveEffectSpecWithHandle(ActiveEffectSpecHandle activeSpecHandle, int stacksToRemove = -1)
         {
-            CheckInit();
             WaitChangeActiveEffectSpecStack(activeSpecHandle, null, stacksToRemove, true);
         }
         
@@ -244,7 +226,6 @@ namespace GAS
         /// </summary>
         public void RemoveActiveEffectSpecWithHandle(ActiveEffectSpecHandle activeSpecHandle, AbilitySystemComponent sourceAsc, int stacksToRemove = -1)
         {
-            CheckInit();
             WaitChangeActiveEffectSpecStack(activeSpecHandle, sourceAsc, stacksToRemove, true);
         }
 
@@ -254,7 +235,6 @@ namespace GAS
         /// </summary>
         public void RemoveActiveEffectSpecWithAssetTags(GameplayTagContainer withTags, int stacksToRemove = -1)
         {
-            CheckInit();
             RemoveActiveEffectSpecWithTagsInternal(withTags, stacksToRemove, true, false);
         }
         
@@ -264,7 +244,6 @@ namespace GAS
         /// </summary>
         public void RemoveActiveEffectSpecWithGrantedTags(GameplayTagContainer withTags, int stacksToRemove = -1)
         {
-            CheckInit();
             RemoveActiveEffectSpecWithTagsInternal(withTags, stacksToRemove, false, true);
         }
 
@@ -274,7 +253,6 @@ namespace GAS
         /// </summary>
         public void RemoveActiveEffectSpecWithTags(GameplayTagContainer withTags, int stacksToRemove = -1)
         {
-            CheckInit();
             RemoveActiveEffectSpecWithTagsInternal(withTags, stacksToRemove, true, true);
         }
         
@@ -315,14 +293,12 @@ namespace GAS
         // HACK: 待测试
         public GameplayAbilitySpecHandle GiveAbility(GameplayAbility ability, int level)
         {
-            CheckInit();
             return GiveAbilityInternal(ability, level);
         }
 
         // HACK: 待测试
         public GameplayAbilitySpecHandle GiveAbilityAndActivateOnce(GameplayAbility ability, int level)
         {
-            CheckInit();
             return GiveAbilityAndActivateOnceInternal(ability, level);
         }
 
@@ -346,21 +322,18 @@ namespace GAS
         /// </summary>
         public void SetRemoveAbilityOnEnd(GameplayAbilitySpecHandle abilityHandle)
         {
-            CheckInit();
             SetRemoveAbilityOnEndInternal(abilityHandle);
         }
         
         // HACK: 待测试
         public void RemoveAbility(GameplayAbilitySpecHandle abilityHandle)
         {
-            CheckInit();
             RemoveAbilityInternal(abilityHandle);
         }
 
         // HACK: 待测试
         public void RemoveAllAbilities()
         {
-            CheckInit();
             var waitToRemoveList = new List<GameplayAbilitySpecHandle>();
             foreach (var pair in ownedAbilities)
                 waitToRemoveList.Add(pair.Key);
@@ -374,7 +347,6 @@ namespace GAS
         // HACK: 待测试
         public bool CanActivateAbility(GameplayAbilitySpecHandle abilityHandle)
         {
-            CheckInit();
             return CanActivateAbilityInternal(abilityHandle);
         }
 
@@ -388,7 +360,6 @@ namespace GAS
         // HACK: 待测试
         public bool TryActivateAbility(GameplayAbilitySpecHandle abilityHandle)
         {
-            CheckInit();
             var canActivate = CanActivateAbilityInternal(abilityHandle);
             if(canActivate)
                 ActivateAbilityInternal(abilityHandle);
@@ -402,7 +373,6 @@ namespace GAS
         /// </summary>
         public void ActivateAbilitiesWithTag(GameplayTagContainer gameplayTag)
         {
-            CheckInit();
             var waitToActivateList = new List<GameplayAbilitySpecHandle>();
             foreach (var pair in ownedAbilities)
                 waitToActivateList.Add(pair.Key);
@@ -418,7 +388,6 @@ namespace GAS
         /// 向自身发送 GameplayEvent
         public void SendGameplayEventToSelf(GameplayEventData eventData)
         {
-            CheckInit();
             // 触发能力的 Trigger
             TriggerAbilityEvent(eventData);
             // TODO: 触发 Gameplay Cues（可能并不需要的功能）
@@ -428,14 +397,12 @@ namespace GAS
         // HACK：待测试
         public void CancelAbilityWithHandle(GameplayAbilitySpecHandle abilityHandle)
         {
-            CheckInit();
             CancelAbilityInternal(abilityHandle);
         }
         
         // HACK：待测试
         public void CancelAbilitiesWithTags(GameplayTagContainer tagContainer)
         {
-            CheckInit();
             CancelAbilitiesWithTagsInternal(tagContainer);
         }
         
