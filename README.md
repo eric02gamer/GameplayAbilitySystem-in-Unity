@@ -151,7 +151,7 @@ Assets/
 // 监听标签添加事件
 asc.RegisterOnAnyTagAdd((tag, count) =>
 {
-    if (tag.HasTag("Effect.Burn"))
+    if (tag.Equals(GameplayTagUtils.GetTagHashFromString("Effect.Burn")))
     {
         // 播放燃烧特效
         PlayEffect("VFX_Fire");
@@ -161,7 +161,7 @@ asc.RegisterOnAnyTagAdd((tag, count) =>
 // 监听标签移除事件
 asc.RegisterOnAnyTagRemove((tag, count) =>
 {
-    if (tag.HasTag("Effect.Burn"))
+    if (tag.Equals(GameplayTagUtils.GetTagHashFromString("Effect.Burn")))
     {
         // 停止燃烧特效
         StopEffect("VFX_Fire");
