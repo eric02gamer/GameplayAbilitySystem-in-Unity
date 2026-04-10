@@ -82,6 +82,7 @@ Assets/
 - Unity 2022.3+
 - .NET Framework 4.7.1
 - C# 9.0
+- （推荐结合 UniTask 使用，补充 AbilityTask 的功能）
 
 ### 基本使用
 
@@ -90,8 +91,9 @@ Assets/
    - 添加 `AbilitySystemComponent` 组件
 
 2. **创建属性集**
-   - 继承 `GameplayAttributeSet` 创建自定义属性集
-   - 在 ASC 中注册属性集
+   - 继承 `GameplayAttributeSet` 创建自定义属性集（ScriptableObject）
+   - 创建自定义属性集实例并配置初始数据
+   - 
 
 3. **创建技能**
    - 继承 `GameplayAbility` 创建自定义技能
